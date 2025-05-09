@@ -1,0 +1,501 @@
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', monospace;
+        }
+
+        body {
+            background: #0f0f1e;
+            color: #f0f0f0; 
+            overflow-x: hidden;
+            position: relative;
+        }
+
+     
+        #backgroundCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(255, 0, 255, 0.05)); 
+            animation: gradientShift 15s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 30, 0.65);
+            z-index: 1;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 30, 0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        nav .logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+nav .logo img {
+    height: 40px; 
+    width: auto;
+}
+
+nav .logo::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: #00ff88;
+    filter: blur(8px);
+    z-index: -1;
+    opacity: 0.6;
+}
+
+nav .logo .logo-text {
+    font-size: 1.8em;
+    color: #00ff88;
+    text-shadow: 0 0 8px #00ff88; 
+}
+
+@media (max-width: 768px) {
+    nav .logo img {
+        height: 30px; 
+    }
+
+    nav .logo .logo-text {
+        font-size: 1.4em; 
+    }
+}
+
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #f0f0f0; 
+            text-decoration: none;
+            font-size: 1em;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: rgba(0, 255, 136, 0.15); 
+        }
+
+        nav ul li a:hover {
+            background: #00ff88;
+            color: #0f0f1e;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+       
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        section:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+
+        section:nth-child(even) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 2.8em;
+            color: #00ff88;
+            text-shadow: 0 0 12px #00ff88; 
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ff88;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        #hero h1 {
+            font-size: 4.8em;
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+            position: relative;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff; }
+            100% { text-shadow: 0 0 30px #ff00ff, 0 0 50px #ff00ff, 0 0 80px #ff00ff; }
+        }
+
+        #hero p {
+            font-size: 1.7em;
+            color: #f0f0f0;
+            max-width: 750px;
+            margin-bottom: 50px;
+            display: inline-block;
+            border-right: 4px solid #00ff88;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(60, end) forwards, blink 0.75s step-end infinite;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); 
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #00ff88; }
+        }
+
+        #hero .btn {
+            background: linear-gradient(45deg, #00ff88, #ff00ff);
+            color: #0f0f1e;
+            padding: 18px 36px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.5s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1.2em;
+        }
+
+        #hero .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+            z-index: 0;
+        }
+
+        #hero .btn:hover::before {
+            left: 100%;
+        }
+
+        #hero .btn:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px #00ff88, 0 0 50px #ff00ff;
+            background: linear-gradient(45deg, #ff00ff, #00ff88);
+        }
+
+        #hero .btn .btn-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        #hero .btn .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .about, .tech-stack, .projects, .certificates, .contact {
+            background: rgba(30, 30, 60, 0.9); 
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.5); 
+            backdrop-filter: blur(8px);
+        }
+
+        .about p {
+            font-size: 1.2em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #f0f0f0;
+        }
+
+        .tech-stack .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-stack .grid div {
+            background: #2a2a50;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            color: #00ff88;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tech-stack .grid div:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 15px #00ff88;
+        }
+
+        .projects .project {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.15); 
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .projects .project:hover {
+            transform: translateY(-5px);
+        }
+
+        .projects h3 {
+            font-size: 1.6em;
+            color: #ff00ff;
+            margin-bottom: 10px;
+        }
+
+        .projects p {
+            font-size: 1.1em;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .projects a {
+            color: #00ff88;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .projects a:hover {
+            text-decoration: underline;
+        }
+
+        .certificates .certificate {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.15);
+            border-radius: 10px;
+        }
+
+        .certificates h3 {
+            font-size: 1.6em;
+            color: #ff00ff;
+            margin-bottom: 10px;
+        }
+
+        .certificates p {
+            font-size: 1.1em;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .certificates a {
+            color: #00ff88;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .certificates a:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 0 20px #00ff88;
+        }
+
+        .modal-content p {
+            color: #0f0f1e;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2em;
+            color: #ff00ff;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #00ff88;
+        }
+
+        /* Contact */
+        .contact p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .contact a {
+            color: #00ff88;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #hero h1 {
+                font-size: 3.2em;
+            }
+
+            #hero p {
+                font-size: 1.3em;
+            }
+
+            #hero .btn {
+                padding: 14px 28px;
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul li {
+                margin-left: 0;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+        }
+    </style>
